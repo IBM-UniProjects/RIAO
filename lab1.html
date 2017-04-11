@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Iridium by TEMPLATED</title>
+		<title>RIAO project no. 2</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
@@ -39,13 +39,13 @@
 				<!-- Nav -->
 				<nav id="nav">
 					<ul>
-						<li><a href="index.html">Homepage</a></li>
-						<li><a href="theory.html">Theory</a></li>
+						<li><a href="index.html">Strona główna</a></li>
+						<li><a href="theory.html">Teoria</a></li>
 						<li class="active"><a href="lab1.html">Lab 1</a></li>
 						<li><a href="lab2.html">Lab 2</a></li>
 						<li><a href="lab3.html">Lab 3</a></li>
 						<li><a href="lab4.html">Lab 4</a></li>
-						<li><a href="references.html">References</a></li>
+						<li><a href="references.html">Bibliografia</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -63,7 +63,66 @@
 								<h2>Lab 1</h2>
 								<span class="byline">9:15AM 10.03.2017</span>
 							</header>
-							<p>Comming soon</p>
+							<p>Na pierwszym laboratorium zajmowaliśmy się Transformatą Radona.</p>
+							<p>Zastosowanie transformaty Radona na obrazie to nic innego jak utworzenie jego projekcji (2D - rzut na oś, 3D - rzut na płaszczyznę) pod danym kątem.
+							Przykładem takiej operacji może być projekcja w tomografii komputerowej CT. Wykorzystując odwrotną transformatę Radona odtwarzamy obraz badanego obiektu
+							poprzez złożenie wielu projekcji wykonanych z różnych kierunków.</p>
+							<p>Obraz, który był przetwarzany to popularny w dziedzinie przetwarzania obrazów Phantom o wymiarach 256x256 pixeli.</p>
+							<iframe src="lab1-3/script.m" frameborder="0" height="200" width="100%" style="border-style:solid;border-width:1px;"></iframe>
+							<center><table style="border: 1px solid black;">
+								<tr>
+									<td style="padding: 10px;" align="center">
+										<a href="lab1-3/radonImages/original.png" onclick="window.open('lab1-3/radonImages/original.png', 'newwindow', 'width=400, height=400'); return false;" >
+										<img src="lab1-3/radonImages/original.png" alt="" />
+										</a>
+									</br>
+									Phantom - oryginał
+									</td>
+								</tr>
+							</table></center>
+							<p>Już tutaj można napotkać pewne problemy. Otóż funkcja <strong>phantom()</strong> generuje macierz, której komórki zawierają zmienne typu double,
+							zarówno dodatnie jak i ujemne. Z kolei funkcja <strong>imshow()</strong> oczekuje macierzy wypełnionej zmiennymi typu uint8, w dodatku w przedziale <0, 255>.</p>
+							<p>Funkcja <strong>imshow()</strong> przyjmuje jako drugi parametr tzw. <strong>colormap</strong>, i aby poprawnie wyświetlić każdą modyfikację phantoma przy jej pomocy
+							należy przekazać w tym miejscu pustą tablicę <strong>[ ]</strong>.</p>
+							<iframe src="lab1-3/script_radon.m" frameborder="0" height="400" width="100%" style="border-style:solid;border-width:1px;"></iframe>
+							<p>Dzięki obliczeniu kolejno transformaty, a następnie odwrotnej transformaty Radona udało się odtworzyć obraz.</p>
+							<p><strong>R = radon(I, theta)</strong></p>
+							<p><strong>I = iradon(R, theta, interpolation, filter)</strong></p>
+							<p>Transformata Radona pozwala uzyskać projekcję obrazu pod danym kątem. Podając jako drugi parametr do funkcji <strong>radon(I, theta)</strong>
+							wektor zawierający wiele kątów uzyskujemy macierz, w której każdy wiersz jest obliczoną transformatą Radona dla projekcji pod podanym kątem.
+							Podając wektor zawierający 180 kątów z przedziału <1,180> uzyskujemy 180 projekcji.</p>
+							<p>Odwrotna transformata Radona pozwala na odtworzenie obrazu na podstawie wielu projekcji. Jako parametry funkcji <strong>iradon()</strong>
+							należy podać macierz zawierającą transformaty Radona dla odpowiednich kątów, kąty tych projekcji, metodę interpolacja wykorzystywanej w
+							projekcji wstecznej oraz zastosowany filtr.</p>
+							<p>Domyślna parametry to interpolacja <strong>liniowa</strong> oraz filtr <strong>Ram-Lak</strong>.</p>
+							<p>Na poniższych obrazach zaprezentowano kolejno oryginalny obraz Phantom, obraz odtworzony z 180 projekcji bez filtru oraz z filtrem Ram-Lak.</p>
+							<p>Odtworzony obraz niepoddany filtrowaniu wydaje się być pokryty mgłą i nie jest w pełni wyraźny. Wynika to z faktu, że zastosowana metoda
+							nadreprezentuje niskie częstotliwości w obrazie wynikowym kosztem częstotliwości wysokich. Niestety krawędzie w obrazie są reprezentowane przez wysokie
+							częstotliwości, w związku z czym obraz wynikowy wydaje się być "rozmazany". Zastosowanie odpowiedniego filtru pozwala wyeliminować ten efekt.</p>
+							<center><table style="border: 1px solid black;">
+								<tr>
+									<td style="padding: 10px;" align="center">
+										<a href="lab1-3/radonImages/original.png" onclick="window.open('lab1-3/radonImages/original.png', 'newwindow', 'width=400, height=400'); return false;" >
+										<img src="lab1-3/radonImages/original.png" alt="" />
+										</a></br>
+										Oryginał
+									</td>
+									<td style="padding: 10px;" align="center">
+										<a href="lab1-3/radonImages/None_linear_best-image.png" onclick="window.open('lab1-3/radonImages/None_linear_best-image.png', 'newwindow', 'width=400, height=400'); return false;" >
+										<img src="lab1-3/radonImages/None_linear_best-image.png" alt="" />
+										</a></br>
+										Projekcja wsteczna bez filtru
+									</td>
+									<td style="padding: 10px;" align="center">
+										<a href="lab1-3/radonImages/Ram-Lak_linear_best-image.png" onclick="window.open('lab1-3/radonImages/Ram-Lak_linear_best-image.png', 'newwindow', 'width=400, height=400'); return false;" >
+										<img src="lab1-3/radonImages/Ram-Lak_linear_best-image.png" alt="" />
+										</a></br>
+										Projekcja wsteczna z filtrem Ram-Lak
+									</td>
+								</tr>
+							</table></center>
+							<p>Odzyskanie obrazu z 180 projekcji dało bardzo dobre efekty po zastosowaniu filtru. Kolejne kroki to zbadanie jak liczba projekcji, oraz inne czynniki,
+							wpływają na jakość obrazu wynikowego.</p>
 							<!-- <a href="#" class="image full"><img src="images/pic07.jpg" alt="" /></a>
 							<p>Sed etiam vestibulum velit, euismod lacinia quam nisl id lorem. Quisque erat. Vestibulum pellentesque, justo mollis pretium suscipit, justo nulla blandit libero, in blandit augue justo quis nisl. Fusce mattis viverra elit. Fusce quis tortor. Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget lorem ipsum dolor. Sed etiam vestibulum velit, euismod lacinia quam nisl id lorem. Quisque erat. Vestibulum pellentesque, justo mollis pretium suscipit, justo nulla blandit libero, in blandit augue justo quis nisl. Fusce mattis viverra elit. Fusce quis tortor. Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget lorem ipsum dolor.</p>
 							<p>Pellentesque pede. Donec pulvinar ullamcorper metus. In eu odio at lectus pulvinar mollis. Vestibulum sem magna, elementum ut, vestibulum eu, facilisis quis, arcu. Mauris a dolor. Nulla facilisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed blandit. Phasellus pellentesque, ante nec iaculis dapibus, eros justo auctor lectus, a lobortis lorem mauris quis nunc. Praesent pellentesque facilisis elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. In hac habitasse platea dictumst. Nullam id ante eget dui vulputate aliquam. Pellentesque erat erat, tincidunt in, eleifend accumsan, malesuada eget, augue. Suspendisse sit amet tellus in eros bibendum condimentum. Vestibulum suscipit volutpat nulla. Phasellus pellentesque, ante nec iaculis dapibus, eros justo auctor lectus, a lobortis lorem mauris quis nunc. Praesent pellentesque facilisis elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos.</p>
@@ -93,17 +152,17 @@
 					</div>
 					<div class="4u">
 						<section>
-							<h2>Theory</h2>
+							<h2>Teoria</h2>
 							<ul class="default">
-								<li><a href="theory.html">Basic theory</a></li>
+								<li><a href="theory.html">Teoria</a></li>
 							</ul>
 						</section>
 					</div>
 					<div class="4u">
 						<section>
-							<h2>References</h2>
+							<h2>Bibliografia</h2>
 							<ul class="default">
-								<li><a href="references.html">All references</a></li>
+								<li><a href="references.html">Bibliografia</a></li>
 							</ul>
 						</section>
 					</div>

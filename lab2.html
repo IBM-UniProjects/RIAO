@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Iridium by TEMPLATED</title>
+		<title>RIAO project no. 2</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
@@ -39,13 +39,13 @@
 				<!-- Nav -->
 				<nav id="nav">
 					<ul>
-						<li><a href="index.html">Homepage</a></li>
-						<li><a href="theory.html">Theory</a></li>
+						<li><a href="index.html">Strona główna</a></li>
+						<li><a href="theory.html">Teoria</a></li>
 						<li><a href="lab1.html">Lab 1</a></li>
 						<li class="active"><a href="lab2.html">Lab 2</a></li>
 						<li><a href="lab3.html">Lab 3</a></li>
 						<li><a href="lab4.html">Lab 4</a></li>
-						<li><a href="references.html">References</a></li>
+						<li><a href="references.html">Bibliografia</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -63,7 +63,117 @@
 								<h2>Lab 2</h2>
 								<span class="byline">9:15AM 24.03.2017</span>
 							</header>
-							<p>Comming soon</p>
+							<p>W celu sprawdzenia właściwości i możliwości transformaty Radona przetestowano wyniki rekonstrukcji obrazu z projekcji o różnej liczbie kątów,
+							a także po zastosowaniu różnej filtracji.</p>
+							<center><table style="border: 1px solid black;">
+								<tr>
+									<td style="padding: 10px;" align="center">
+										<a href="lab1-3/radonImages/original.png" onclick="window.open('lab1-3/radonImages/original.png', 'newwindow', 'width=400, height=400'); return false;" >
+										<img src="lab1-3/radonImages/original.png" alt="" />
+										</a></br>
+										Phantom - oryginał
+									</td>
+								</tr>
+							</table></center>
+							<p>Pierwszym nasuwającym się pytaniem było jak mocno liczba projekcji wpływa na jakość obrazu. W tym celu stworzono 4 obrazy:</br>
+								- złożenie 180 projekcji, dθ = 1°;</br>
+								- złożenie 18 projekcji, dθ = 10°;</br>
+								- złożenie 4 projekcji, dθ = 45°;</br>
+								- złożenie 2 projekcji, dθ = 90°.</br>
+								Kąty projekcji zmieniały się liniowo.</br>
+								Mniejsza liczba projekcji niosła ze sobą pogorszenie jakości zdjęcia, do tego stopnia, że przy liczbie projekcji poniżej kilkunastu
+								tracony jest zarys obiektu na obrazie. Tak naprawdę zależy to w dużej mierze od kształtu obiektu - kwadrat lub prostokąt zostanie już
+								w pewnym zakresie odtworzony przy dwóch projekcjach. Rzutowanie na oś OX i prostopadłą OY wystarcza, żeby je rozpoznać. Jednocześnie,
+								co jest widoczne w tym przypadku, odtwarzanie elpisy z projekcji na dwie prostopadłe osie w efekcie da prostokąt. Skrajnym przypadkiem jest
+								koło, którego dokładne odtworzenie wymaga nieskończonej ilości projekcji w pełnym zakresie kątów - w przeciwnym razie widoczny będzie wielokąt.
+								W praktyce tak duża liczba projekcji nie jest konieczna i zmiana kąta o 1 stopień, czyli 180 projekcji daje satysfakcjonujące efekty.</br>
+							</p>
+							<center><table style="border: 1px solid black;">
+								Obraz odtworzony z projekcji od 1° do 180° (filtr Ram-Lak)
+								<tr>
+									<td style="padding: 10px;" align="center">
+										<a href="lab1-3/rodan_phantom_matlab/reconstruction_1deg_180deg.png" onclick="window.open('lab1-3/rodan_phantom_matlab/reconstruction_1deg_180deg.png', 'newwindow', 'width=400, height=400'); return false;" >
+										<img src="lab1-3/rodan_phantom_matlab/reconstruction_1deg_180deg.png" alt="" width="300px"/>
+										</a></br>
+										Projekcja co 1° | 180 projekcji
+									</td>
+									<td style="padding: 10px;" align="center">
+										<a href="lab1-3/rodan_phantom_matlab/reconstruction_10deg_180deg.png" onclick="window.open('lab1-3/rodan_phantom_matlab/reconstruction_10deg_180deg.png', 'newwindow', 'width=400, height=400'); return false;" >
+										<img src="lab1-3/rodan_phantom_matlab/reconstruction_10deg_180deg.png" alt="" width="300px" />
+										</a></br>
+										Projekcja co 10° | 18 projekcji
+									</td>
+								</tr>
+								<tr>
+									<td style="padding: 10px;" align="center">
+										<a href="lab1-3/rodan_phantom_matlab/reconstruction_45deg_180deg.png" onclick="window.open('lab1-3/rodan_phantom_matlab/reconstruction_45deg_180deg.png', 'newwindow', 'width=400, height=400'); return false;" >
+										<img src="lab1-3/rodan_phantom_matlab/reconstruction_45deg_180deg.png" alt="" width="300px" />
+										</a></br>
+										Projekcja co 45° | 4 projekcje
+									</td>
+									<td style="padding: 10px;" align="center">
+										<a href="lab1-3/rodan_phantom_matlab/reconstruction_90deg_180deg.png" onclick="window.open('lab1-3/rodan_phantom_matlab/reconstruction_90deg_180deg.png', 'newwindow', 'width=400, height=400'); return false;" >
+										<img src="lab1-3/rodan_phantom_matlab/reconstruction_90deg_180deg.png" alt="" width="300px" />
+										</a></br>
+										Projekcja co 90° | 2 projekcje
+									</td>
+								</tr>
+							</table></center>
+							<p>Kolejnym interesującym aspektem jest filtrowanie wyników rekonstrukcji. Jak widać w poniższej tabeli obraz nie poddany filtracji
+							jest mocno niewyraźny co wynika z nadreprezentacji niskich częstotliwości po przeprowadzeniu transformacji Radona. W tym celu należy zastosować filtr
+							górnoprzepustowy - przepuszczający wysokie częstotliwości. Takim filtrem jest Ram-Lak, który blokuje niskie częstotliwości, przepuszcza wysokie i liniowo traktuje częstotliwości w środku pasma.
+							Filtr ten jest nieoceniony przy rekonstrukcji projekcji, aczkolwiek jego zastosowanie ma niepożądany efekt wzmacniania dodatkowego szumu obecnego w projekcjach.
+							Aby zgłagodzić ten efekt stosuje się szereg zmodyfikowanych filtrów:</br>
+							- Shepp-Logan - filtr Ram-Lak przemnożony przez funkcję sinc,</br>
+							- Cosine - filtr Ram-Lak przemnożony przez funkcję cos,</br>
+							- Hamming - filtr Ram-Lak przemnożony przez okno Hamminga,</br>
+							- Hann - filtr Ram-Lak przemnożony przez okno Hanna.</br>
+							Ponieważ operowaliśmy na projekcjach pozbawionych szumu efekty powyższych filtrów są niemal identyczne.</p>
+							<center><table style="border: 1px solid black;">
+								Obraz odtworzony z 180 projekcji poddany różnemu filtrowaniu
+								<tr>
+									<td style="padding: 10px;" align="center">
+										<a href="lab1-3/radonImages/None_linear_best-image.png" onclick="window.open('lab1-3/radonImages/None_linear_best-image.png', 'newwindow', 'width=400, height=400'); return false;" >
+										<img src="lab1-3/radonImages/None_linear_best-image.png" alt="" width="256px"/>
+										</a></br>
+										Brak filtru
+									</td>
+									<td style="padding: 10px;" align="center">
+										<a href="lab1-3/radonImages/Ram-Lak_linear_best-image.png" onclick="window.open('lab1-3/radonImages/Ram-Lak_linear_best-image.png', 'newwindow', 'width=400, height=400'); return false;" >
+										<img src="lab1-3/radonImages/Ram-Lak_linear_best-image.png" alt="" width="256px" />
+										</a></br>
+										Ram-Lak
+									</td>
+									<td style="padding: 10px;" align="center">
+										<a href="lab1-3/radonImages/Shepp-Logan_linear_best-image.png" onclick="window.open('lab1-3/radonImages/Shepp-Logan_linear_best-image.png', 'newwindow', 'width=400, height=400'); return false;" >
+										<img src="lab1-3/radonImages/Shepp-Logan_linear_best-image.png" alt="" width="256px" />
+										</a></br>
+										Shepp-Logan
+									</td>
+								</tr>
+								<tr>
+									<td style="padding: 10px;" align="center">
+										<a href="lab1-3/radonImages/Cosine_linear_best-image.png" onclick="window.open('lab1-3/radonImages/Cosine_linear_best-image.png', 'newwindow', 'width=400, height=400'); return false;" >
+										<img src="lab1-3/radonImages/Cosine_linear_best-image.png" alt="" width="256px" />
+										</a></br>
+										Cosine
+									</td>
+									<td style="padding: 10px;" align="center">
+										<a href="lab1-3/radonImages/Hamming_linear_best-image.png" onclick="window.open('lab1-3/radonImages/Hamming_linear_best-image.png', 'newwindow', 'width=400, height=400'); return false;" >
+										<img src="lab1-3/radonImages/Hamming_linear_best-image.png" alt="" width="256px" />
+										</a></br>
+										Hamming
+									</td>
+									<td style="padding: 10px;" align="center">
+										<a href="lab1-3/radonImages/Hann_linear_best-image.png" onclick="window.open('lab1-3/radonImages/Hann_linear_best-image.png', 'newwindow', 'width=400, height=400'); return false;" >
+										<img src="lab1-3/radonImages/Hann_linear_best-image.png" alt="" width="256px" />
+										</a></br>
+										Hann
+									</td>
+								</tr>
+							</table></center>
+							<p>Kolejnym celem jest dokładna analiza powyższych czynników poprzez przedstawienie zależności jakości obrazu wynikowego
+							od liczby projekcji i rodzaju filtrów na wykresach. W tym celu zastosowane będą różne miary typu SNR, MSE itp.</p>
 						</section>
 					</div>
 
@@ -88,17 +198,17 @@
 					</div>
 					<div class="4u">
 						<section>
-							<h2>Theory</h2>
+							<h2>Teoria</h2>
 							<ul class="default">
-								<li><a href="theory.html">Basic theory</a></li>
+								<li><a href="theory.html">Teoria</a></li>
 							</ul>
 						</section>
 					</div>
 					<div class="4u">
 						<section>
-							<h2>References</h2>
+							<h2>Bibliografia</h2>
 							<ul class="default">
-								<li><a href="references.html">All references</a></li>
+								<li><a href="references.html">Bibliografia</a></li>
 							</ul>
 						</section>
 					</div>

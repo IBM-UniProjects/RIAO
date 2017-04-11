@@ -6,7 +6,44 @@
 -->
 <html>
 	<head>
-		<title>Iridium by TEMPLATED</title>
+		<title>RIAO project no. 2</title>
+		<style type="text/css">
+			/* Style the tab */
+			div.tab {
+    		overflow: hidden;
+    		border: 1px solid #ccc;
+    		background-color: #f1f1f1;
+			}
+
+			/* Style the buttons inside the tab */
+			div.tab button {
+    		background-color: inherit;
+    		float: left;
+    		border: none;
+    		outline: none;
+    		cursor: pointer;
+    		padding: 14px 16px;
+    		transition: 0.3s;
+			}
+
+			/* Change background color of buttons on hover */
+			div.tab button:hover {
+    		background-color: #ddd;
+			}
+
+			/* Create an active/current tablink class */
+			div.tab button.active {
+    		background-color: #ccc;
+			}
+
+			/* Style the tab content */
+			.tabcontent {
+    		display: none;
+    		padding: 6px 12px;
+    		border: 1px solid #ccc;
+    		border-top: none;
+			}
+		</style>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
@@ -39,13 +76,13 @@
 				<!-- Nav -->
 				<nav id="nav">
 					<ul>
-						<li><a href="index.html">Homepage</a></li>
-						<li><a href="theory.html">Theory</a></li>
+						<li><a href="index.html">Strona główna</a></li>
+						<li><a href="theory.html">Teoria</a></li>
 						<li><a href="lab1.html">Lab 1</a></li>
 						<li><a href="lab2.html">Lab 2</a></li>
 						<li class="active"><a href="lab3.html">Lab 3</a></li>
 						<li><a href="lab4.html">Lab 4</a></li>
-						<li><a href="references.html">References</a></li>
+						<li><a href="references.html">Bibliografia</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -63,7 +100,587 @@
 								<h2>Lab 3</h2>
 								<span class="byline">9:15AM 07.04.2017</span>
 							</header>
-							<p>Comming soon</p>
+							<p>Kolejnym zadaniem było wykreślenie zależności jakości obrazu od liczby projekcji i rodzaju filtrowania.
+							W tym celu zastosowano kilka miar pozwalających na określenie jakości rekonstrukcji metodą projekcji wstecznej:</br>
+							- <strong>SNR [dB]</strong> (ang. signal-to-noise ratio) - stosunek sygnału użytecznego do szumu podawany w dB,</br>
+							- <strong>PSNR [dB]</strong> (ang. peak signal-to-noise ratio) - stosunek maksymalnej mocy sygnału użytecznego do szumu podawany w dB,</br>
+							- <strong>MAE</strong> (ang. mean absolute error) - średni błąd bezwzględny,</br>
+							- <strong>MSE</strong> (ang. mean squared error) - średni błąd kwadratowy,</br>
+							- <strong>RMSE</strong> (ang. root mean squared error) - średnia kwadratowa błędu,</br>
+							- <strong>SSIM</strong> (ang. structural similarity index) - indeks podobieństwa strukturalnego obrazu badanego z referencyjnym.</br>
+							<strong>Błędem</strong> w tym przypadku są różnice w wartości pixeli pomiędzy obrazem wynikowym, a oryginalnym.
+							</p>
+							<p>Kliknięcie w poniższe przyciski wyświetla odpowiednie wykresy.</p>
+							<div class="tab">
+  							<button class="tablinks" onclick="openCity(event, 'SNR')">SNR</button>
+  							<button class="tablinks" onclick="openCity(event, 'PSNR')">PSNR</button>
+  							<button class="tablinks" onclick="openCity(event, 'MAE')">MAE</button>
+								<button class="tablinks" onclick="openCity(event, 'MSE')">MSE</button>
+								<button class="tablinks" onclick="openCity(event, 'RMSE')">PMSE</button>
+								<button class="tablinks" onclick="openCity(event, 'SSIM')">SSIM	</button>
+							</div>
+
+							<div id="SNR" class="tabcontent">
+								<p>SNR mierzy stosunek sygnału użytecznego (obraz interesującego nas obiektu) do pozostałego w sygnale szumu. Możemy to zbadać
+								odnosząc obraz po rekonstrukcji do obrazu oryginalnego - normalnie nie posiadamy obiektu referencyjnego. Im większ wartość SNR
+								tym więcej sygnału oryginalnego znajduje się w naszym obrazie, a więc możemy uznać, że obraz jest lepszej jakości.</p>
+								<p>Wartość wskaźnika rosła wraz ze wzrostem liczby projekcji - oznacza to, że jakość sygnału wynikowego względem wzorcowego się poprawiała.
+								Należy zwrócić uwagę na szybkie zbliżanie się do wartości granicznej (wzrost logarytmiczny), już przy ok. 40 projekcjach wartość SNR mieściła się w granicach 3dB od wartości najlepszej.</p>
+								<p>Dobre wartości wskaźnika SNR otrzymaliśmy dopiero po filtracjach - dla których wskaźnik ten był bardzo zbliżony. Najwięszka wartość
+								otrzymana była po przeprowadzeniu obrazu przez filtr Hann, choć nieznacznie odstawał on od pozostałych wyników - 8,029dB.</p>
+								<center><table style="border: 1px solid black;">
+									SNR [dB] = f(liczba_projekcji)
+									<tr>
+										<td style="padding: 10px;" align="center">
+											<a href="lab1-3/SNR/None_linear_scatter.png" onclick="window.open('lab1-3/SNR/None_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+											<img src="lab1-3/SNR/None_linear_scatter.png" width="350px" alt="" />
+											</a></br>
+											Brak filtru
+										</td>
+										<td style="padding: 10px;" align="center">
+											<a href="lab1-3/SNR/Ram-Lak_linear_scatter.png" onclick="window.open('lab1-3/SNR/Ram-Lak_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+											<img src="lab1-3/SNR/Ram-Lak_linear_scatter.png" width="350px" alt="" />
+											</a></br>
+											Ram-Lak
+										</td>
+										<td style="padding: 10px;" align="center">
+											<a href="lab1-3/SNR/Shepp-Logan_linear_scatter.png" onclick="window.open('lab1-3/SNR/Shepp-Logan_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+											<img src="lab1-3/SNR/Shepp-Logan_linear_scatter.png" width="350px" alt="" />
+											</a></br>
+											Shepp-Logan
+										</td>
+									</tr>
+									<tr>
+										<td style="padding: 10px;" align="center">
+											<a href="lab1-3/SNR/Cosine_linear_scatter.png" onclick="window.open('lab1-3/SNR/Cosine_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+											<img src="lab1-3/SNR/Cosine_linear_scatter.png" width="350px" alt="" />
+											</a></br>
+											Cosine
+										</td>
+										<td style="padding: 10px;" align="center">
+											<a href="lab1-3/SNR/Hamming_linear_scatter.png" onclick="window.open('lab1-3/SNR/Hamming_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+											<img src="lab1-3/SNR/Hamming_linear_scatter.png" width="350px" alt="" />
+											</a></br>
+											Hamming
+										</td>
+										<td style="padding: 10px;" align="center">
+											<a href="lab1-3/SNR/Hann_linear_scatter.png" onclick="window.open('lab1-3/SNR/Hann_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+											<img src="lab1-3/SNR/Hann_linear_scatter.png" width="350px" alt="" />
+											</a></br>
+											Hann
+										</td>
+									</tr>
+								</table></center>
+							</div>
+
+							<div id="PSNR" class="tabcontent">
+								<p>PSNR jest bardzo podobnym wskaźnikiem do SNR z tą różnicą, że odnosi się maksymalnej mocy sygnału użytecznego.</p>
+								<p>Poniższe wykresy przedstawiają jednakowe zależności co w przypadku zastosowania miary SNR.</p>
+								<p>Wg miary PSNR najlepszym filtrem ponownie okazał się Ram-Lak przemnożony przez okienko Hanna - 20,202dB.</p>
+								<center><table style="border: 1px solid black;">
+									PSNR [dB] = f(liczba_projekcji)
+									<tr>
+										<td style="padding: 10px;" align="center">
+											<a href="lab1-3/PSNR/None_linear_scatter.png" onclick="window.open('lab1-3/PSNR/None_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+											<img src="lab1-3/PSNR/None_linear_scatter.png" width="350px" alt="" />
+											</a></br>
+											Brak filtru
+										</td>
+										<td style="padding: 10px;" align="center">
+											<a href="lab1-3/PSNR/Ram-Lak_linear_scatter.png" onclick="window.open('lab1-3/PSNR/Ram-Lak_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+											<img src="lab1-3/PSNR/Ram-Lak_linear_scatter.png" width="350px" alt="" />
+											</a></br>
+											Ram-Lak
+										</td>
+										<td style="padding: 10px;" align="center">
+											<a href="lab1-3/PSNR/Shepp-Logan_linear_scatter.png" onclick="window.open('lab1-3/PSNR/Shepp-Logan_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+											<img src="lab1-3/PSNR/Shepp-Logan_linear_scatter.png" width="350px" alt="" />
+											</a></br>
+											Shepp-Logan
+										</td>
+									</tr>
+									<tr>
+										<td style="padding: 10px;" align="center">
+											<a href="lab1-3/PSNR/Cosine_linear_scatter.png" onclick="window.open('lab1-3/PSNR/Cosine_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+											<img src="lab1-3/PSNR/Cosine_linear_scatter.png" width="350px" alt="" />
+											</a></br>
+											Cosine
+										</td>
+										<td style="padding: 10px;" align="center">
+											<a href="lab1-3/PSNR/Hamming_linear_scatter.png" onclick="window.open('lab1-3/PSNR/Hamming_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+											<img src="lab1-3/PSNR/Hamming_linear_scatter.png" width="350px" alt="" />
+											</a></br>
+											Hamming
+										</td>
+										<td style="padding: 10px;" align="center">
+											<a href="lab1-3/PSNR/Hann_linear_scatter.png" onclick="window.open('lab1-3/PSNR/Hann_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+											<img src="lab1-3/PSNR/Hann_linear_scatter.png" width="350px" alt="" />
+											</a></br>
+											Hann
+										</td>
+									</tr>
+								</table></center>
+							</div>
+
+							<div id="MAE" class="tabcontent">
+								<p>MAE przedstawia średni bezwględny błąd, czyli średnią bezwględną różnice pomiędzy odtworzonym, a oryginalnym obrazem.
+								W tym przypadku mniejsze wartości wskaźnika MAE są bardziej pożądane.</p>
+								<p>We wszystkich przypadkach widoczna jest zależność poprawy jakości obrazu wraz ze wzrostem liczby projekcji - poza jednym przypadkiem.
+								Dla obrazu niepoddanemu filtracji widoczna jest odwrotna zależność - ten problem wynika z zastosowania miary bezwzględnej.</p>
+								<p>Najlepszym filtrem wg tej miary okazuje się filtr Hann - 0,023.</p>
+								<center><table style="border: 1px solid black;">
+								  MAE
+								  <tr>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/MAE/None_linear_scatter.png" onclick="window.open('lab1-3/MAE/None_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/MAE/None_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Brak filtru
+								    </td>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/MAE/Ram-Lak_linear_scatter.png" onclick="window.open('lab1-3/MAE/Ram-Lak_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/MAE/Ram-Lak_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Ram-Lak
+								    </td>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/MAE/Shepp-Logan_linear_scatter.png" onclick="window.open('lab1-3/MAE/Shepp-Logan_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/MAE/Shepp-Logan_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Shepp-Logan
+								    </td>
+								  </tr>
+								  <tr>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/MAE/Cosine_linear_scatter.png" onclick="window.open('lab1-3/MAE/Cosine_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/MAE/Cosine_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Cosine
+								    </td>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/MAE/Hamming_linear_scatter.png" onclick="window.open('lab1-3/MAE/Hamming_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/MAE/Hamming_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Hamming
+								    </td>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/MAE/Hann_linear_scatter.png" onclick="window.open('lab1-3/MAE/Hann_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/MAE/Hann_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Hann
+								    </td>
+								  </tr>
+								</table></center>
+							</div>
+
+							<div id="MSE" class="tabcontent">
+								<p>MSE liczy średnią kwadratów błędu naszego wygenerowanego obrazu. Jest to jedna z najpopularniejszych miar oceny jakości modelu w przetwarzaniu sygnałów i innych dziedzinach.</p>
+								<p>Błąd malał dla wszystkich przypadków wraz ze wzrostem liczby projekcji. Znikają również problemy związane z obrazem bez filtru obecne przy analizie w wykorzystaniem MAE.</p>
+								<p>Wszystkie filtry dały niemal jednakowe wyniki, wciąż filtr Hann znajduję się w czołówce - 0,010.</p>
+								<center><table style="border: 1px solid black;">
+								  MSE
+								  <tr>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/MSE/None_linear_scatter.png" onclick="window.open('lab1-3/MSE/None_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/MSE/None_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Brak filtru
+								    </td>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/MSE/Ram-Lak_linear_scatter.png" onclick="window.open('lab1-3/MSE/Ram-Lak_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/MSE/Ram-Lak_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Ram-Lak
+								    </td>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/MSE/Shepp-Logan_linear_scatter.png" onclick="window.open('lab1-3/MSE/Shepp-Logan_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/MSE/Shepp-Logan_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Shepp-Logan
+								    </td>
+								  </tr>
+								  <tr>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/MSE/Cosine_linear_scatter.png" onclick="window.open('lab1-3/MSE/Cosine_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/MSE/Cosine_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Cosine
+								    </td>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/MSE/Hamming_linear_scatter.png" onclick="window.open('lab1-3/MSE/Hamming_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/MSE/Hamming_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Hamming
+								    </td>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/MSE/Hann_linear_scatter.png" onclick="window.open('lab1-3/MSE/Hann_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/MSE/Hann_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Hann
+								    </td>
+								  </tr>
+								</table></center>
+							</div>
+
+							<div id="RMSE" class="tabcontent">
+								<p>RMSE to błąd średniokwadratowy - miara bardzo podobno do MSE.</p>
+								<p>Analiza z wykorzystaniem tej miary pozwala wyciągnąć niemal identyczne wnioski co z wykorzystaniem MSE.</p>
+								<p>Najlepszymi filtrami pod względem RMSE są filtry Hamminga i ponownie Hanna - 0,098.</p>
+								<center><table style="border: 1px solid black;">
+								  RMSE
+								  <tr>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/RMSE/None_linear_scatter.png" onclick="window.open('lab1-3/RMSE/None_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/RMSE/None_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Brak filtru
+								    </td>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/RMSE/Ram-Lak_linear_scatter.png" onclick="window.open('lab1-3/RMSE/Ram-Lak_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/RMSE/Ram-Lak_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Ram-Lak
+								    </td>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/RMSE/Shepp-Logan_linear_scatter.png" onclick="window.open('lab1-3/RMSE/Shepp-Logan_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/RMSE/Shepp-Logan_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Shepp-Logan
+								    </td>
+								  </tr>
+								  <tr>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/RMSE/Cosine_linear_scatter.png" onclick="window.open('lab1-3/RMSE/Cosine_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/RMSE/Cosine_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Cosine
+								    </td>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/RMSE/Hamming_linear_scatter.png" onclick="window.open('lab1-3/RMSE/Hamming_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/RMSE/Hamming_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Hamming
+								    </td>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/RMSE/Hann_linear_scatter.png" onclick="window.open('lab1-3/RMSE/Hann_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/RMSE/Hann_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Hann
+								    </td>
+								  </tr>
+								</table></center>
+							</div>
+
+							<div id="SSIM" class="tabcontent">
+								<p>SSIM to indeks wykorzystywany jedynie w dziedzinie analizy obrazów. Pozwala on na wyznaczenie stopnia podobieństwa strukturalnego dwóch obrazów.
+								Im większy jest ten wskaźnik tym bardziej podobne są do siebie dwa badane obrazy.</p>
+								<p>Dla rekonstrukcji bez filtru SSIM z trudem rozpoznaje jakiekolwiek podobieństwa strukturalne. Po zastosowaniu filtrów widzimy dopiero bardzo dobrą, zbliżoną
+								do liniowej zależność - wartość SSIM jest wprost proporcjonalna do liczby projekcji wykorzystanej do rekonstrukcji obrazu.</p>
+								<p>Ponownie najlepszym filtrem okazuje się filtr Hann - 0,895.</p>
+								<center><table style="border: 1px solid black;">
+								  SSIM
+								  <tr>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/SSIM/None_linear_scatter.png" onclick="window.open('lab1-3/SSIM/None_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/SSIM/None_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Brak filtru
+								    </td>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/SSIM/Ram-Lak_linear_scatter.png" onclick="window.open('lab1-3/SSIM/Ram-Lak_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/SSIM/Ram-Lak_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Ram-Lak
+								    </td>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/SSIM/Shepp-Logan_linear_scatter.png" onclick="window.open('lab1-3/SSIM/Shepp-Logan_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/SSIM/Shepp-Logan_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Shepp-Logan
+								    </td>
+								  </tr>
+								  <tr>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/SSIM/Cosine_linear_scatter.png" onclick="window.open('lab1-3/SSIM/Cosine_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/SSIM/Cosine_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Cosine
+								    </td>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/SSIM/Hamming_linear_scatter.png" onclick="window.open('lab1-3/SSIM/Hamming_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/SSIM/Hamming_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Hamming
+								    </td>
+								    <td style="padding: 10px;" align="center">
+								      <a href="lab1-3/SSIM/Hann_linear_scatter.png" onclick="window.open('lab1-3/SSIM/Hann_linear_scatter.png', 'newwindow', 'width=800, height=600'); return false;" >
+								      <img src="lab1-3/SSIM/Hann_linear_scatter.png" width="350px" alt="" />
+								      </a></br>
+								      Hann
+								    </td>
+								  </tr>
+								</table></center>
+							</div>
+						</br>
+							<p>Poniższa tabela zawiera zestawienie miar dla rekonstrukcji z użyciem 180 projekcji.</p>
+							<center><table style="border: 1px solid black;">
+								<tr>
+									<th style="padding: 10px;" align="center" width="120px">
+
+									</th>
+									<th style="padding: 10px;" align="center" width="120px">
+										None
+									</th>
+									<th style="padding: 10px;" align="center" width="120px">
+										Ram-Lak
+									</th>
+									<th style="padding: 10px;" align="center" width="120px">
+										Shepp-Logan
+									</th>
+									<th style="padding: 10px;" align="center" width="120px">
+										Cosine
+									</th>
+									<th style="padding: 10px;" align="center" width="120px">
+										Hamming
+									</th>
+									<th style="padding: 10px;" align="center" width="120px">
+										<strong>Hann</strong>
+									</th>
+								</th>
+								<tr>
+									<td style="padding: 10px;" align="center">
+										SNR
+									</td>
+									<td style="padding: 10px;" align="center">
+										-46.433
+									</td>
+									<td style="padding: 10px;" align="center">
+										7.486
+									</td>
+									<td style="padding: 10px;" align="center">
+										7.646
+									</td>
+									<td style="padding: 10px;" align="center">
+										7.893
+									</td>
+									<td style="padding: 10px;" align="center">
+										8.001
+									</td>
+									<td style="padding: 10px;" align="center">
+										<strong>8.029</strong>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding: 10px;" align="center">
+										PSNR
+									</td>
+									<td style="padding: 10px;" align="center">
+										-34.261
+									</td>
+									<td style="padding: 10px;" align="center">
+										19.658
+									</td>
+									<td style="padding: 10px;" align="center">
+										19.818
+									</td>
+									<td style="padding: 10px;" align="center">
+										20.066
+									</td>
+									<td style="padding: 10px;" align="center">
+										20.174
+									</td>
+									<td style="padding: 10px;" align="center">
+										<strong>20.202</strong>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding: 10px;" align="center">
+										MAE
+									</td>
+									<td style="padding: 10px;" align="center">
+										49.807
+									</td>
+									<td style="padding: 10px;" align="center">
+										0.028
+									</td>
+									<td style="padding: 10px;" align="center">
+										0.026
+									</td>
+									<td style="padding: 10px;" align="center">
+										0.024
+									</td>
+									<td style="padding: 10px;" align="center">
+										0.024
+									</td>
+									<td style="padding: 10px;" align="center">
+										<strong>0.023</strong>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding: 10px;" align="center">
+										MSE
+									</td>
+									<td style="padding: 10px;" align="center">
+										2667.467
+									</td>
+									<td style="padding: 10px;" align="center">
+										0.011
+									</td>
+									<td style="padding: 10px;" align="center">
+										0.010
+									</td>
+									<td style="padding: 10px;" align="center">
+										0.010
+									</td>
+									<td style="padding: 10px;" align="center">
+										0.010
+									</td>
+									<td style="padding: 10px;" align="center">
+										<strong>0.010</strong>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding: 10px;" align="center">
+										PMSE
+									</td>
+									<td style="padding: 10px;" align="center">
+										51.648
+									</td>
+									<td style="padding: 10px;" align="center">
+										0.104
+									</td>
+									<td style="padding: 10px;" align="center">
+										0.102
+									</td>
+									<td style="padding: 10px;" align="center">
+										0.99
+									</td>
+									<td style="padding: 10px;" align="center">
+										0.98
+									</td>
+									<td style="padding: 10px;" align="center">
+										<strong>0.98</strong>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding: 10px;" align="center">
+										SSIM
+									</td>
+									<td style="padding: 10px;" align="center">
+										0.001
+									</td>
+									<td style="padding: 10px;" align="center">
+										0.790
+									</td>
+									<td style="padding: 10px;" align="center">
+										0.831
+									</td>
+									<td style="padding: 10px;" align="center">
+										0.882
+									</td>
+									<td style="padding: 10px;" align="center">
+										0.892
+									</td>
+									<td style="padding: 10px;" align="center">
+										<strong>0.895</strong>
+									</td>
+								</tr>
+							</table></center>
+							<h3>Wnioski</h3>
+							<p>Wyniki zawarte w tabeli sugerują, że najlepszym filtrem dla rekonstrukcji przy pomocy projekcji wstecznej
+							okazuje się filtr Hanna. Niestety nie sposób przewidzieć czy filtr ten powinien być zastosowany przy każdej
+							generacji obrazu tego typu. Rodzaj zastosowanego filtru powinien zależeć od struktury obrazu wejściowego
+							(lub obiektu, którego projekcie składano), a także natury szumu obecnego w obrazie wynikowym. Powyższe wyniki
+							są właściwe jedynie dla operacji na obrazie Phantom i dla tego obrazu najlepszym filtrem jest filtr Hann.</p>
+							<p>Przeprowadzone obliczenia jasno też wskazują, że większa liczba projekcji poprawia jakość rekonstrukcji.
+							Jednak warto zawuważyć bardzo szybką poprawę jakości wraz ze wzrostem liczby projekcji - oznacza to, że można
+							poświęcić dużą liczbę projekcji (np. 40 zamiast 180) jednocześnie w nieznacznym stopniu pogarszając odwzorowanie obiektów na obrazie wynikowym.
+							Jest to bardzo istotna sprawa, ponieważ każda projekcja w metodzie tomografii komputerowej CT wiąże się z użyciem silnego i niebezpiecznego promieniowania.</p>
+							<h3>Kod MATLAB</h3>
+							<div class="tab">
+  							<button class="tablinks" onclick="openCity(event, 'kodSNR')">Kod SNR</button>
+  							<button class="tablinks" onclick="openCity(event, 'kodPSNR')">Kod PSNR</button>
+  							<button class="tablinks" onclick="openCity(event, 'kodMAE')">Kod MAE</button>
+								<button class="tablinks" onclick="openCity(event, 'kodMSE')">Kod MSE</button>
+								<button class="tablinks" onclick="openCity(event, 'kodRMSE')">Kod PMSE</button>
+								<button class="tablinks" onclick="openCity(event, 'kodSSIM')">Kod SSIM</button>
+								<button class="tablinks" onclick="openCity(event, 'pozostałe')">Pozostałe</button>
+							</div>
+
+							<div id="kodSNR" class="tabcontent">
+								<p>scriptSNR.m</p>
+								<iframe src="lab1-3/scriptSNR.m" frameborder="0" height="70" width="100%" style="border-style:solid;border-width:1px;"></iframe>
+								<p>radonSNR.m</p>
+								<iframe src="lab1-3/radonSNR.m" frameborder="0" height="500" width="100%" style="border-style:solid;border-width:1px;"></iframe>
+								<p>SNR.m</p>
+								<iframe src="lab1-3/SNR.m" frameborder="0" height="250" width="100%" style="border-style:solid;border-width:1px;"></iframe>
+							</div>
+
+							<div id="kodPSNR" class="tabcontent">
+							  <p>scriptPSNR.m</p>
+							  <iframe src="lab1-3/scriptPSNR.m" frameborder="0" height="70" width="100%" style="border-style:solid;border-width:1px;"></iframe>
+							  <p>radonPSNR.m</p>
+							  <iframe src="lab1-3/radonPSNR.m" frameborder="0" height="500" width="100%" style="border-style:solid;border-width:1px;"></iframe>
+							  <p>PSNR.m</p>
+							  <iframe src="lab1-3/PSNR.m" frameborder="0" height="250" width="100%" style="border-style:solid;border-width:1px;"></iframe>
+							</div>
+
+							<div id="kodMAE" class="tabcontent">
+							  <p>scriptMAE.m</p>
+							  <iframe src="lab1-3/scriptMAE.m" frameborder="0" height="70" width="100%" style="border-style:solid;border-width:1px;"></iframe>
+							  <p>radonMAE.m</p>
+							  <iframe src="lab1-3/radonMAE.m" frameborder="0" height="500" width="100%" style="border-style:solid;border-width:1px;"></iframe>
+							  <p>MAE.m</p>
+							  <iframe src="lab1-3/MAE.m" frameborder="0" height="250" width="100%" style="border-style:solid;border-width:1px;"></iframe>
+							</div>
+
+							<div id="kodMSE" class="tabcontent">
+							  <p>scriptMSE.m</p>
+							  <iframe src="lab1-3/scriptMSE.m" frameborder="0" height="70" width="100%" style="border-style:solid;border-width:1px;"></iframe>
+							  <p>radonMSE.m</p>
+							  <iframe src="lab1-3/radonMSE.m" frameborder="0" height="500" width="100%" style="border-style:solid;border-width:1px;"></iframe>
+							  <p>MSE.m</p>
+							  <iframe src="lab1-3/MSE.m" frameborder="0" height="250" width="100%" style="border-style:solid;border-width:1px;"></iframe>
+							</div>
+
+							<div id="kodRMSE" class="tabcontent">
+							  <p>scriptRMSE.m</p>
+							  <iframe src="lab1-3/scriptRMSE.m" frameborder="0" height="70" width="100%" style="border-style:solid;border-width:1px;"></iframe>
+							  <p>radonRMSE.m</p>
+							  <iframe src="lab1-3/radonRMSE.m" frameborder="0" height="500" width="100%" style="border-style:solid;border-width:1px;"></iframe>
+							  <p>RMSE.m</p>
+							  <iframe src="lab1-3/RMSE.m" frameborder="0" height="250" width="100%" style="border-style:solid;border-width:1px;"></iframe>
+							</div>
+
+							<div id="kodSSIM" class="tabcontent">
+							  <p>scriptSSIM.m</p>
+							  <iframe src="lab1-3/scriptSSIM.m" frameborder="0" height="70" width="100%" style="border-style:solid;border-width:1px;"></iframe>
+							  <p>radonSSIM.m</p>
+							  <iframe src="lab1-3/radonSSIM.m" frameborder="0" height="500" width="100%" style="border-style:solid;border-width:1px;"></iframe>
+							  <p>SSIM.m</p>
+							  <iframe src="lab1-3/SSIM.m" frameborder="0" height="250" width="100%" style="border-style:solid;border-width:1px;"></iframe>
+							</div>
+
+							<div id="pozostałe" class="tabcontent">
+							  <p>rescale.m</p>
+							  <iframe src="lab1-3/rescale.m" frameborder="0" height="150" width="100%" style="border-style:solid;border-width:1px;"></iframe>
+							</div>
+
+						<script>
+						function openCity(evt, cityName) {
+						    var i, tabcontent, tablinks;
+						    tabcontent = document.getElementsByClassName("tabcontent");
+						    for (i = 0; i < tabcontent.length; i++) {
+						        tabcontent[i].style.display = "none";
+						    }
+						    tablinks = document.getElementsByClassName("tablinks");
+						    for (i = 0; i < tablinks.length; i++) {
+						        tablinks[i].className = tablinks[i].className.replace(" active", "");
+						    }
+						    document.getElementById(cityName).style.display = "block";
+						    evt.currentTarget.className += " active";
+						}
+						</script>
 						</section>
 					</div>
 
@@ -88,17 +705,17 @@
 					</div>
 					<div class="4u">
 						<section>
-							<h2>Theory</h2>
+							<h2>Teoria</h2>
 							<ul class="default">
-								<li><a href="theory.html">Basic theory</a></li>
+								<li><a href="theory.html">Teoria</a></li>
 							</ul>
 						</section>
 					</div>
 					<div class="4u">
 						<section>
-							<h2>References</h2>
+							<h2>Bibliografia</h2>
 							<ul class="default">
-								<li><a href="references.html">All references</a></li>
+								<li><a href="references.html">Bibliografia</a></li>
 							</ul>
 						</section>
 					</div>
